@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>VScroll &bull; Test2</title>
+        <link rel="stylesheet" href="css/make-scrollable.css">
+        <style>
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    width: 100%;
+    height: 100%;
+}
+.container {
+    height: 300px;
+    background-color: green;
+    position: relative;
+}
+
+#content span {
+    display: block;
+}
+        </style>
+    </head>
+    <body>
+        <div style="width: 100%; height: 200px; margin-bottom: 20px">
+            <button>BURADA</button>
+        </div>
+        <div class="container v-scrollable">
+            <div id="content">
+            </div>
+        </div>
+        <button id="addMore">MORE</button>
+        <script type="text/javascript" src="js/make-scrollable.js"></script>
+        <script type="text/javascript">
+
+var content = document.getElementById('content');
+for(var i = 0; i < 50; i += 1) {
+    var span  = document.createElement('span');
+    span.innerHTML = 'this is number ' + (i + 1);
+    content.appendChild(span);
+}
+
+var scrollable = new _makeVScrollable();
+
+document.getElementById('addMore').addEventListener('click', function () {
+    for(var i = 50; i < 100; i += 1) {
+        var span  = document.createElement('span');
+        span.innerHTML = 'this is number ' + (i + 1);
+        content.appendChild(span);
+    }
+
+    scrollable.recalculate();
+}, false);
+        </script>
+    </body>
+</html>

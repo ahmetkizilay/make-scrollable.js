@@ -1,0 +1,46 @@
+.v-scrollable {
+    /* position: relative; */
+    overflow: hidden;
+}
+
+div.vscroll {
+    position: absolute;
+    width: 10px;
+    border-radius: 4px;
+    background-color: #ccc;
+    opacity: 0;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    -moz-transition: opacity 0.4s ease-in-out;
+    -ms-transition: opacity 0.4s ease-in-out;
+    -o-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.v-scrollable:hover div.vscroll {
+    opacity: 0.2;
+    -webkit-transition: opacity 0.4s ease-in-out;
+    -moz-transition: opacity 0.4s ease-in-out;
+    -ms-transition: opacity 0.4s ease-in-out;
+    -o-transition: opacity 0.4s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.v-scrollable:hover div.vscroll:hover {
+    opacity: 0.8;
+}
+
+div.vscroll div.thumb {
+    width: 100%;
+    position: absolute;
+    background-color: #444;
+    border-radius: 4px;
+    top: 0;
+}
+
+div.vscroll div.thumb:hover {
+    cursor: pointer;
+}
+
+.opaque {
+    opacity: 0.8 !important;
+}

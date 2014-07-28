@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>VScroll &bull; Test3</title>
+        <link rel="stylesheet" href="css/make-scrollable.css">
+        <style>
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    width: 400px;
+    height: 300px;
+    background-color: green;
+    float: left;
+    margin-right: 10px;
+}
+
+.two {
+    margin-top: 40px;
+}
+
+span {
+    display: block;
+}
+        </style>
+    </head>
+    <body>
+        <div class="one container v-scrollable">
+            <div id="content1">
+            </div>
+        </div>
+        <div class="two container v-scrollable">
+            <div id="content2">
+            </div>
+        </div>
+        <script type="text/javascript" src="js/make-scrollable.js"></script>
+        <script type="text/javascript">
+
+console.log('tests multiple vscrolls in the same dom');
+console.log('uses _makeVScrollable.all() to find and convert all v-scrollable divs');
+
+var content1 = document.getElementById('content1');
+var content2 = document.getElementById('content2');
+addContent(content1, 50);
+addContent(content2, 100);
+
+function addContent(parent, num) {
+    for(var i = 0; i < num; i += 1) {
+        var span  = document.createElement('span');
+        span.innerHTML = 'this is number ' + (i + 1);
+        parent.appendChild(span);
+    }
+}
+
+_makeVScrollable.all();
+
+        </script>
+    </body>
+</html>
