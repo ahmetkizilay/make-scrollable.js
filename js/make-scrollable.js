@@ -129,9 +129,14 @@ var _makeVScrollable = function () {
     thumb.addEventListener('mouseup', function () {
         mousePressed = false;
     }, false);
-    thumb.addEventListener('mouseout', function (e) {
-        mousePressed = false;
-    }, false);
+
+    /*
+        should not stop scrolling on mouseout as we want to keep scrolling
+        as long as the mouse is pressed.
+     */
+    // thumb.addEventListener('mouseout', function (e) {
+    //     mousePressed = false;
+    // }, false);
     thumb.addEventListener('click', function (e) {
         e.stopPropagation();
     }, false);
@@ -155,6 +160,37 @@ var _makeVScrollable = function () {
         content.style.top = '-' + Math.floor(calculatedTop * ratio) + 'px';
 
         e.stopPropagation();
+    }, false);
+
+
+    /*
+        this method is necessary to prevent the mouse selecting text as the user scrolls down with
+        the mouse pressed. It is really difficult to keep the mouse in a straight vertical direction,
+        and deviating into the content area unintentionally selects everything on its path.
+     */
+    container.addEventListener('mousemove', function(e) {
+        if(mousePressed) {
+            var currentTop = thumb.style.top ? parseInt(thumb.style.top.substring(0, thumb.style.top.length - 1), 10) : 0;
+            var calculatedTop = (currentTop + e.clientY - prevY);
+            calculatedTop = Math.min(Math.max(0, calculatedTop), contentEffectiveHeight);
+            thumb.style.top = calculatedTop + 'px';
+            prevY = e.clientY;
+
+            content.style.top = '-' + Math.floor(calculatedTop * ratio) + 'px';
+
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, false);
+
+    /*
+        during scroll, the mouse might have leaked into the container region.
+        for a better interaction, the scrolling event should continue until the mouse is up.
+     */
+    container.addEventListener('mouseup', function() {
+        if(mousePressed) {
+            mousePressed = false;
+        }
     }, false);
     
     /*
@@ -184,10 +220,6 @@ var _makeVScrollable = function () {
             vscroll.classList.remove('opaque');
             deferOpacity = null;
         }, 500);
-    }, false);
-
-    container.addEventListener('resize', function () {
-        console.log('resized');
     }, false);
 
     // until I find out another way to detect changes in the height of the content div
