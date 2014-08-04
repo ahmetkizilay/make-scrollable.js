@@ -157,6 +157,15 @@ var _makeVScrollable = function () {
         e.stopPropagation();
     }, false);
     
+    /*
+        scrollbar is fully transparent when mouse is somewhere other than the container div
+        when mouse is on the div, mouse is made opaque a little bit to give a visual clue that it exists.
+        when mousewheel is moved, or mouse hovers on the scrollbar the scrollbar is fully opaque.
+
+        deferOpacity variable is used to track when mousewheel actions truly ends.
+        setTimeout schedules to remove the css class after 500 seconds, unless a new mousewheel
+        event cancels the setTimeout function before it gets to execute.
+     */
     var deferOpacity;
     container.addEventListener('mousewheel', function (e) {
         var currentTop = content.style.top ? parseInt(content.style.top.substring(0, content.style.top.length - 1), 10) : 0;
